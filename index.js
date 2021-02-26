@@ -2,6 +2,12 @@ const express = require('express');
 const multer = require('multer');
 const sentencer = require('sentencer');
 const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+let port = process.env.TACOCART_PORT || 3000;
+let host = process.env.TACOCART_HOST || 'localhost:3000';
 
 const storage = multer.diskStorage({
     destination: (req, file, back) => {
@@ -24,18 +30,24 @@ const upload = multer({
 const app = express();
 
 app.get('/', (req, res) => {
-    res.send('A challenger approaches...');
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.get('/:file', (req, res) => {
-    res.sendFile(path.join(__dirname, "tacos", req.params.file), () => {
-        res.status(404).send("file not found.");
+    res.download(path.join(__dirname, "tacos", req.params.file), (err) => {
+        if (err) {
+            console.log(err);
+            res.status(err.status).end();
+        }
+        else {
+            console.log('Sent:', req.params.file);
+        }
     });
 });
 
 app.post('/', upload.single( "file" ), (req, res) => {
-
-    res.send(req.file.filename);
+    console.log("Uploaded:", req.file.filename);
+    res.send(host + "/" + req.file.filename);
 });
 
-app.listen(3000, () => console.log('Taco Cart is serving tacos on port 3000.'));
+app.listen(port, () => console.log('Taco Cart is serving tacos on port 3000.'));
