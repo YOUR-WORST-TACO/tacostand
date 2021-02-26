@@ -1,0 +1,23 @@
+version: '3'
+services:
+        tayko.co:
+                container_name: node-u.tayko.co
+                image: node-u.tayko.co
+                restart: always
+                build: .
+                ports:
+                        - "3000:3000"
+                networks:
+                        - web
+                labels:
+                        - "traefik.backend=tayko.co"
+                        - "traefik.docker.network=web"
+                        - "traefik.frontend.rule=Host:u.tayko.co"
+                        - "traefik.enabled=true"
+                        - "traefik.port=3000"
+                        - "traefik.default.protocol=http"
+                volumes:
+                        - ./tacos:/usr/src/app/tacos
+networks:
+        web:
+                external: true
