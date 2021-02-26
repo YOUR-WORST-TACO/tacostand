@@ -47,7 +47,7 @@ app.get('/:file', (req, res) => {
 
 app.post('/', upload.single( "file" ), (req, res) => {
     console.log("Uploaded:", req.file.filename);
-    res.send(host + "/" + req.file.filename);
+    res.send(host + "/" + req.file.filename + "\n");
 });
 
 app.listen(port, () => console.log('Taco Cart is serving tacos on port 3000.'));
