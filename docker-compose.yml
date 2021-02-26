@@ -17,7 +17,7 @@ services:
                         - "traefik.port=3000"
                         - "traefik.default.protocol=http"
                 volumes:
-                        - ./tacos:/usr/src/app/tacos
+                        - ../tacos:/usr/src/app/tacos
 networks:
         web:
                 external: true
