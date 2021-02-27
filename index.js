@@ -4,15 +4,22 @@ const sentencer = require('sentencer');
 const path = require('path');
 const dotenv = require('dotenv');
 const fs = require('fs');
+const ejs = require('ejs');
 
 dotenv.config();
 
-let port = process.env.TACOCART_PORT || 3000;
-let host = process.env.TACOCART_HOST || 'localhost:3000';
-let minutes = process.env.TACOCART_MINUTES || 30;
-let max_age = process.env.TACOCART_MAX_AGE || 7;
-let max_age_once = process.env.TACOCART_MAX_AGE_ONCE || 1;
-let check_interval = minutes * 60 * 1000
+const app = express();
+
+app.set('view engine', 'ejs');
+
+let app_config = {
+    port: process.env.TACOCART_PORT || 3000,
+    host: process.env.TACOCART_HOST || 'localhost:3000',
+    minutes: process.env.TACOCART_MINUTES || 30,
+    max_age: process.env.TACOCART_MAX_AGE || 7,
+    max_age_once: process.env.TACOCART_MAX_AGE_ONCE || 1,
+}
+let check_interval = app_config.minutes * 60 * 1000
 
 let standard_storage = path.join(__dirname, "tacos");
 if (!fs.existsSync(standard_storage)) {
@@ -43,8 +50,8 @@ async function file_cleanup(folder, age) {
 
 setInterval(async () => {
     try {
-        await file_cleanup(standard_storage, max_age);
-        await file_cleanup(once_storage, max_age_once);
+        await file_cleanup(standard_storage, app_config.max_age);
+        await file_cleanup(once_storage, app_config.max_age_once);
     } catch (e) {
         console.log("Error:", e);
     }
@@ -73,10 +80,9 @@ const upload = multer({
     }
 });
 
-const app = express();
-
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    //res.sendFile(path.join(__dirname, "index.ejs"));
+    res.render('index', {config: app_config});
 });
 
 app.get('/:file', (req, res) => {
@@ -105,12 +111,12 @@ app.get('/:file', (req, res) => {
 
 app.post('/', upload.single( "file" ), (req, res) => {
     console.log("Uploaded:", req.file.filename);
-    res.send(host + "/" + req.file.filename + "\n");
+    res.send(app_config.host + "/" + req.file.filename + "\n");
 });
 
 app.post('/once', upload.single("file"), (req, res) => {
     console.log("Uploaded once:", req.file.filename);
-    res.send( host + "/" + req.file.filename + "\n");
+    res.send( app_config.host + "/" + req.file.filename + "\n");
 })
 
-app.listen(port, () => console.log('Taco Cart is serving tacos on port 3000.'));
+app.listen(app_config.port, () => console.log('Taco Cart is serving tacos on port 3000.'));
