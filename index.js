@@ -20,6 +20,34 @@ if (!fs.existsSync(once_storage)) {
     fs.mkdirSync(once_storage);
 }
 
+let minutes = 0.1, check_interval = minutes * 60 * 1000
+
+async function file_cleanup(folder) {
+    const files = await fs.promises.readdir(folder);
+    for (const file of files) {
+
+        const info = await fs.promises.stat(path.join(folder, file))
+        if (info.isFile()) {
+            let check_date = new Date();
+            check_date.setDate(check_date.getDate() - 1);
+
+            if (info.mtime < check_date) {
+                fs.rmSync(path.join(folder, file));
+                console.log("File Expired:", file);
+            }
+        }
+    }
+}
+
+setInterval(async () => {
+    try {
+        await file_cleanup(standard_storage);
+        await file_cleanup(once_storage);
+    } catch (e) {
+        console.log("Error:", e);
+    }
+}, check_interval);
+
 const store_manager = multer.diskStorage({
     destination: (req, file, back) => {
         if (req.path === "/once") {
