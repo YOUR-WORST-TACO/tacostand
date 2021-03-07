@@ -5,7 +5,8 @@ dotenv.config();
 const config = {
     server: {
         port: process.env.TACOCART_PORT || 3000,
-        host: process.env.TACOCART_HOST || 'localhost'
+        host: process.env.TACOCART_HOST || 'localhost',
+        secure: process.env.TACOCART_SECURE || false
     },
     upload: {
         age: {
