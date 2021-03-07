@@ -1,23 +1,12 @@
-// deprecate
-//import Koa from "koa";
-//import render from "koa-ejs";
-
 const Koa = require('koa');
 const render = require('koa-ejs');
 const routes = require('./routes');
 
-// const express = require('express');
-//import * as routes from './routes/index';
-
 const path = require('path');
-const dotenv = require('dotenv');
 const fs = require('fs');
 const crypto = require('crypto');
 
 const config = require('./config');
-
-//const bodyParser = require("body-parser");
-
 
 const app = new Koa();
 
@@ -28,12 +17,6 @@ render(app, {
     cache: false,
     debug: true
 });
-
-//app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(bodyParser.json());
-
-//app.set('view engine', 'ejs');
-
 
 let check_interval = config.upload.cleanup * 60 * 1000
 
@@ -81,10 +64,6 @@ setInterval(async () => {
 
 // ROUTER
 Object.keys(routes).forEach((routeKey) =>app.use(routes[routeKey].routes()));
-
-/*app.get('/', (req, res) => {
-    res.render('index', {config: app_config});
-});*/
 
 /*app.get('/:file', (req, res) => {
     if (fs.existsSync(path.join(once_storage, req.params.file))) {

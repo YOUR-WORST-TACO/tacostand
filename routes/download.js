@@ -1,7 +1,5 @@
-//import Router from "@koa/router";
 const Router = require('@koa/router');
 const koaBody = require('koa-body');
-//import koaBody from "koa-body";
 
 const router = new Router();
 

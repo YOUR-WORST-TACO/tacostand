@@ -1,8 +1,5 @@
-//import Router from "@koa/router";
 const Router = require('@koa/router');
-
 const upload = require('../resources/multer');
-//import upload from '../resources/multer';
 
 const router = new Router();
 

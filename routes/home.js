@@ -1,5 +1,3 @@
-//import Router from "@koa/router";
-
 const Router = require('@koa/router');
 const config = require('../config');
 const router = new Router();
