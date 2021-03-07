@@ -3,8 +3,8 @@ const sentencer = require('sentencer');
 const path = require('path');
 
 const store_manager = multer.diskStorage({
-    destination: (req, file, back) => {
-        switch (req.path) {
+    destination: (ctx, file, back) => {
+        switch (ctx.url) {
             case "/once":
                 back(null, './tacos/supreme');
                 break;
@@ -15,10 +15,10 @@ const store_manager = multer.diskStorage({
                 back(null, './tacos');
         }
     },
-    filename: (req, file, back) => {
+    filename: (ctx, file, back) => {
         let file_name = sentencer.make("{{adjective}}-{{noun}}") + path.extname(file.originalname);
 
-        if (req.path === "/wrap") {
+        if (ctx.url === "/wrap") {
             file_name += ".wrap";
         }
 

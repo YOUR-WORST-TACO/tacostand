@@ -17,7 +17,7 @@ const config = {
     },
     cipher: {
         key: process.env.TACOCART_KEY || 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3',
-        algorithm: process.env.TACOCART_ALGORITHM
+        algorithm: process.env.TACOCART_ALGORITHM || 'aes-256-ctr'
     }
 }
 
