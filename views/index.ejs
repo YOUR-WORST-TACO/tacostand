@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<% let port = config.port != 80 && config.port != 443 ? ":" + config.port : ""%>
+<% let port = config.server.port !== 80 && config.server.port !== 443 ? ":" + config.server.port : ""%>
 
 <h1>Tacostand</h1>
 <p>A simple uploading tool.</p>
@@ -14,23 +14,23 @@
 <h3>Uploading a file with curl</h3>
 <p>To upload a file run the following:</p>
 <code>
-    curl -F "file=@/my/file/location" <%= config.host + port%>
+    curl -F "file=@/my/file/location" <%= config.server.host + port%>
 </code>
-<p>Which will upload and store a file with a random name for <%= config.max_age%> days.</p>
+<p>Which will upload and store a file with a random name for <%= config.upload.age.normal %> days.</p>
 <p>The server will respond with the new location of the file similar to the below example.</p>
 <code>
-    https://<%= config.host + port%>/spry-pumpkin.jpg
+    https://<%= config.server.host + port%>/spry-pumpkin.jpg
 </code>
 <br><br>
 <h3>Uploading a one time access file with curl</h3>
 <p>If you want to upload a file that can only be accessed once do the following:</p>
 <code>
-    curl -F "file=@/my/file/location" <%= config.host + port%>/once
+    curl -F "file=@/my/file/location" <%= config.server.host + port%>/once
 </code>
 
-<% let day = config.max_age_once > 1 ? "days" : "day"%>
+<% let day = config.upload.age.once > 1 ? "days" : "day" %>
 
-<p>Which will work like normal but will only be accessable once and will only be stored for <%= config.max_age_once + " " + day %>.</p>
+<p>Which will work like normal but will only be accessible once and will only be stored for <%= config.upload.age.once + " " + day %>.</p>
 <br>
 <p>Check out the source code at <a href="https://github.com/YOUR-WORST-TACO/tacostand">Github</a></p>
 </body>
