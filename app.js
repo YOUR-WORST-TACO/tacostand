@@ -21,8 +21,6 @@ render(app, {
     debug: false
 });
 
-
-
 // ROUTER
 Object.keys(routes).forEach((routeKey) =>app.use(routes[routeKey].routes()));
 
