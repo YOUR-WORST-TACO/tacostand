@@ -18,7 +18,7 @@ router.post('/', upload.single('file'), ctx => {
 });
 
 router.post('/once', upload.single('file'), ctx => {
-    console.log("Uploaded once:", ctx.file.filename);
+    log("uploaded: %s using %s method.", ctx.file.filename, 'once');
     //res.send( app_config.host + "/" + req.file.filename + "\n");
     ctx.body = host() + ctx.file.filename + "\n";
 });
@@ -29,6 +29,8 @@ router.post('/wrap', upload.single('file'), ctx => {
         const encrypted = cipher.encrypt(file_contents);
 
         fs.writeFileSync(path.join(files.storage.wrap, ctx.file.filename), encrypted.content);
+
+        log("uploaded: %s using %s method", ctx.file.filename, 'wrap');
 
         ctx.body = host() + ctx.file.filename + "\npassword: " + encrypted.key + "\n";
     } catch (e) {

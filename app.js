@@ -21,6 +21,9 @@ render(app, {
     debug: false
 });
 
+// TODO
+// fix encryption
+
 // ROUTER
 Object.keys(routes).forEach((routeKey) =>app.use(routes[routeKey].routes()));
 
