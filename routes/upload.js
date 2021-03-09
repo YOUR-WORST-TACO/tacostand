@@ -34,8 +34,6 @@ router.post('/wrap', upload.single('file'), ctx => {
 
         fs.writeFileSync(path.join(files.storage.wrap, ctx.file.filename), encrypted.content);
 
-        console.log(encrypted.content);
-
         log("uploaded: %s using %s method", ctx.file.filename, 'wrap');
 
         ctx.body = host() + ctx.file.filename + "\npassword: " + encrypted.password + "\n";

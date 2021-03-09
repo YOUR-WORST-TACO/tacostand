@@ -56,7 +56,7 @@ module.exports.init = () => {
             await file_cleanup(storage.once, config.upload.age.once);
             await file_cleanup(storage.wrap, config.upload.age.wrap);
         } catch (e) {
-            console.log("Error:", e);
+            console.log(e);
         }
     }, check_interval);
     log("file cleanup watcher started.");

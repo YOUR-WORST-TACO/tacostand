@@ -38,13 +38,10 @@ module.exports.decrypt = (data, password) => {
     try {
         const salt = data.slice(0, 64);
         const iv = data.slice(64, 80);
-        //console.log(salt);
-        //console.log(iv);
         const text = data.slice(80, data.length);
 
         let derived_key = crypto.pbkdf2Sync(password, salt, 50000, 32, 'sha512');
 
-        //console.log(derived_key);
         const decipher = crypto.createDecipheriv(config.cipher.algorithm, derived_key, iv);
         let decrypted = Buffer.concat([decipher.update(text), decipher.final()]);
 
