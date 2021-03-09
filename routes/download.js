@@ -14,8 +14,8 @@ const log = debug('tacostand:upload');
 router.get('/:file', (ctx, next) => {
     let file_type = mime.lookup(path.extname(ctx.params.file)) || 'application/octet-stream';
     let location = files.storage.standard;
-    if (fs.existsSync(path.join(files.storage.once, ctx.params.file))) {
-        location = files.storage.once;
+    if (fs.existsSync(path.join(files.storage.togo, ctx.params.file))) {
+        location = files.storage.togo;
     }
     let stream = fs.createReadStream(path.join(location, ctx.params.file));
 
