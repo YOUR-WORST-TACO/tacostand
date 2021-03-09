@@ -1,0 +1,30 @@
+* { font-family: Helvetica, sans-serif; }
+h1 { font-size: 60px; }
+h3 {
+    font-size: 35px;
+    padding-top: 50px;
+}
+p { font-size: 21px; }
+pre {
+    padding: 0 0 0 20px;
+    white-space: normal;
+    word-break: break-all;
+    line-height: 1.5;
+    border-left: 5px solid #00c80c;
+    background-color: #eeeded
+}
+code {
+    font-size: 21px;
+    white-space: pre-wrap;
+    padding: 0;
+    line-height: 1.5;
+}
+.top-image{
+    width: 100px;
+    height: 100px;
+}
+.git-image {
+    padding-top: 50px;
+    width:200px;
+}
+.wrapper { margin: 0 auto; width: 750px; }

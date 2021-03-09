@@ -3,27 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Taco Stand</title>
-    <style type="text/css">
-        * { font-family: Helvetica, sans-serif; }
-        h1 { font-size: 60px; }
-        h3 { font-size: 35px; }
-        p { font-size: 21px; }
-        pre {
-            padding: 0;
-            white-space: pre-wrap;
-            word-break: break-all;
-            line-height: 1.5;
-            border-left: 5px solid #00c80c;
-            background-color: #fafafa;
-        }
-        code {
-            font-size: 21px;
-            white-space: pre-wrap;
-            padding: 0;
-            line-height: 1.5;
-        }
-        .wrapper { margin: 0 auto; width: 750px; }
-    </style>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
 
@@ -32,12 +16,13 @@
 <div class="wrapper">
     <h1>Tacostand</h1>
     <p>A simple uploading tool.</p>
+    <img class="top-image" src="images/icon.png" alt="tacostand icon"/>
     <h3>Uploading a file with curl</h3>
     <hr>
     <p>To upload a file run the following:</p>
     <pre>
         <code>
-        curl -F "file=@/my/file/location" <%= host %>
+curl -F "file=@/my/file/location" <%= host %>
         </code>
     </pre>
 
@@ -48,7 +33,7 @@
     <p>The server will respond with the new location of the file similar to the below example.</p>
     <pre>
         <code>
-        <%= host %>spry-pumpkin.jpg
+<%= host %>spry-pumpkin.jpg
         </code>
     </pre>
 
@@ -57,7 +42,7 @@
     <p>If you want to upload a file that can only be accessed once do the following:</p>
     <pre>
         <code>
-        curl -F "file=@/my/file/location" <%= host %>once
+curl -F "file=@/my/file/location" <%= host %>once
         </code>
     </pre>
 
@@ -71,7 +56,7 @@
     <p>You can store an encrypted file by doing the following:</p>
     <pre>
         <code>
-        curl -F "file=@/my/file/location" <%= host %>wrap
+curl -F "file=@/my/file/location" <%= host %>wrap
         </code>
     </pre>
     <% let wrap_day = config.upload.age.wrap > 1 ? "days" : "day" %>
@@ -81,11 +66,12 @@
 
     <pre>
         <code>
-        <%= host %>spry-pumpkin.jpg
-        password: somerandomstring
+<%= host %>spry-pumpkin.jpg
+password: somerandomstring
         </code>
     </pre>
 
+    <img class="git-image" src="images/GitHub_Logo.png" alt="github icon"/>
     <p>Check out the source code at <a href="https://github.com/YOUR-WORST-TACO/tacostand">Github</a></p>
 </div>
 </body>

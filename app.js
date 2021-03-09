@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const serve = require('koa-static');
 const render = require('koa-ejs');
 const path = require('path');
 const debug = require('debug');
@@ -21,10 +22,7 @@ render(app, {
     debug: false
 });
 
-// TODO
-// fix encryption
-// reference: https://stackoverflow.com/questions/64045860/nodejs-aes-256-gcm-break-pdf-gzip-png-encoding-after-decryption
-
+app.use(serve(path.join(__dirname, 'public')));
 // ROUTER
 Object.keys(routes).forEach((routeKey) =>app.use(routes[routeKey].routes()));
 
