@@ -13,13 +13,11 @@ const log = debug('tacostand:upload');
 
 router.post('/', upload.single('file'), ctx => {
     log("uploaded: %s using %s method.", ctx.file.filename, 'standard');
-    //res.send(app_config.host + "/" + req.file.filename + "\n");
     ctx.body = host() + ctx.file.filename + "\n";
 });
 
 router.post('/togo', upload.single('file'), ctx => {
     log("uploaded: %s using %s method.", ctx.file.filename, 'togo');
-    //res.send( app_config.host + "/" + req.file.filename + "\n");
     ctx.body = host() + ctx.file.filename + "\n";
 });
 

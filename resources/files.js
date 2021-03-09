@@ -31,7 +31,6 @@ if (!fs.existsSync(storage.wrap)) {
 }
 
 async function file_cleanup(folder, age) {
-    //log('Trying cleanup')
     const files = await fs.promises.readdir(folder);
     for (const file of files) {
         const info = await fs.promises.stat(path.join(folder, file))
