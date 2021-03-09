@@ -42,14 +42,14 @@ curl -F "file=@/my/file/location" <%= host %>
     <p>If you want to upload a file that can only be accessed once do the following:</p>
     <pre>
         <code>
-curl -F "file=@/my/file/location" <%= host %>once
+curl -F "file=@/my/file/location" <%= host %>togo
         </code>
     </pre>
 
-    <% let once_day = config.upload.age.once > 1 ? "days" : "day" %>
+    <% let togo_day = config.upload.age.togo > 1 ? "days" : "day" %>
 
     <p>Which will work like normal but will only be accessible once and will only be stored
-        for <%= config.upload.age.once + " " + once_day %>.</p>
+        for <%= config.upload.age.togo + " " + togo_day %>.</p>
 
     <h3>Uploading an encrypted file with curl</h3>
     <hr>

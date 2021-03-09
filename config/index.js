@@ -11,7 +11,7 @@ const config = {
     upload: {
         age: {
             normal: process.env.TACOCART_MAX_AGE || 7,
-            once: process.env.TACOCART_MAX_AGE_ONCE || 1,
+            togo: process.env.TACOCART_MAX_AGE_ONCE || 1,
             wrap: process.env.TACOCART_MAX_AGE_WRAP || 1
         },
         cleanup: process.env.TACOCART_MINUTES || 30

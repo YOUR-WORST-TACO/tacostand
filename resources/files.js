@@ -11,7 +11,7 @@ const __root = path.dirname(require.main.filename);
 
 const storage = {
     standard: path.join(__root, "tacos"),
-    once: path.join(__root, "tacos", "supreme"),
+    togo: path.join(__root, "tacos", "togo"),
     wrap: path.join(__root, "tacos", "wrap")
 }
 
@@ -20,9 +20,9 @@ if (!fs.existsSync(storage.standard)) {
     log('created directory %s', storage.standard);
 }
 
-if (!fs.existsSync(storage.once)) {
-    fs.mkdirSync(storage.once);
-    log('created directory %s', storage.once);
+if (!fs.existsSync(storage.togo)) {
+    fs.mkdirSync(storage.togo);
+    log('created directory %s', storage.togo);
 }
 
 if (!fs.existsSync(storage.wrap)) {
@@ -53,7 +53,7 @@ module.exports.init = () => {
     setInterval(async () => {
         try {
             await file_cleanup(storage.standard, config.upload.age.normal);
-            await file_cleanup(storage.once, config.upload.age.once);
+            await file_cleanup(storage.togo, config.upload.age.togo);
             await file_cleanup(storage.wrap, config.upload.age.wrap);
         } catch (e) {
             console.log(e);
