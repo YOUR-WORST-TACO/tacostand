@@ -26,13 +26,19 @@ router.post('/once', upload.single('file'), ctx => {
 router.post('/wrap', upload.single('file'), ctx => {
     try {
         const file_contents = fs.readFileSync(path.join(files.storage.wrap, ctx.file.filename), {flag: 'r'});
-        const encrypted = cipher.encrypt(file_contents);
+        const password = cipher.generatePassword(16);
+
+        const contents = Buffer.concat([new Buffer.from(password, 'utf-8'), file_contents] );
+
+        const encrypted = cipher.encrypt(contents, password);
 
         fs.writeFileSync(path.join(files.storage.wrap, ctx.file.filename), encrypted.content);
 
+        console.log(encrypted.content);
+
         log("uploaded: %s using %s method", ctx.file.filename, 'wrap');
 
-        ctx.body = host() + ctx.file.filename + "\npassword: " + encrypted.key + "\n";
+        ctx.body = host() + ctx.file.filename + "\npassword: " + encrypted.password + "\n";
     } catch (e) {
         console.log(e);
         fs.rmSync(path.join(files.storage.wrap, ctx.file.filename));

@@ -23,6 +23,7 @@ render(app, {
 
 // TODO
 // fix encryption
+// reference: https://stackoverflow.com/questions/64045860/nodejs-aes-256-gcm-break-pdf-gzip-png-encoding-after-decryption
 
 // ROUTER
 Object.keys(routes).forEach((routeKey) =>app.use(routes[routeKey].routes()));

@@ -45,13 +45,30 @@ router.post('/:file', koaBody(), ctx => {
             const file_contents = fs.readFileSync(path.join(files.storage.wrap, ctx.params.file), {flag: 'r'});
             const output = cipher.decrypt(file_contents, ctx.request.body.key);
 
-            let file_type = mime.lookup(path.extname(path.parse(ctx.params.file).name)) || 'application/octet-stream';
+            const password = ctx.request.body.key;
+            const password_length = password.length
 
-            ctx.body = output.toString();
-            ctx.set('Content-disposition', 'attachment; filename=' + path.parse(ctx.params.file).name);
-            ctx.set('Content-type', file_type);
-            log("sent file: %s", path.parse(ctx.params.file).name);
+            if (output.length < password_length) {
+                ctx.status = 501;
+                return;
+            }
+
+            const store_password = output.slice(0, password_length).toString();
+            const content = output.slice(password_length, output.length);
+
+            if (store_password === password) {
+                let file_type = mime.lookup(path.extname(path.parse(ctx.params.file).name)) || 'application/octet-stream';
+
+                ctx.body = content;
+                ctx.set('Content-disposition', 'attachment; filename=' + path.parse(ctx.params.file).name);
+                ctx.set('Content-type', file_type);
+                log("sent file: %s of type %s.", path.parse(ctx.params.file).name, file_type);
+            } else {
+                ctx.status = 401;
+                log("Bad password, file not sent");
+            }
         } catch (e) {
+            console.log(e);
             log("wrong key provided");
             ctx.status = 501;
         }
