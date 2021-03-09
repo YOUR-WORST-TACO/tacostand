@@ -4,7 +4,9 @@ h3 {
     font-size: 35px;
     padding-top: 50px;
 }
-p { font-size: 21px; }
+p {
+    font-size: 21px;
+}
 pre {
     padding: 0 0 0 20px;
     white-space: normal;
