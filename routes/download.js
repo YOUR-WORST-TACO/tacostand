@@ -14,26 +14,31 @@ const log = debug('tacostand:upload');
 router.get('/:file', (ctx, next) => {
     let file_type = mime.lookup(path.extname(ctx.params.file)) || 'application/octet-stream';
     let location = files.storage.standard;
+    let type = "standard";
     if (fs.existsSync(path.join(files.storage.togo, ctx.params.file))) {
         location = files.storage.togo;
+        type = "togo";
     }
-    let stream = fs.createReadStream(path.join(location, ctx.params.file));
+
+    const stream = fs.createReadStream(path.join(location, ctx.params.file));
+    ctx.body = stream;
+    ctx.set('Content-disposition', 'attachment; filename=' + ctx.params.file);
+    ctx.set('Content-type', file_type);
+
+    if (type === "togo")
+    {
+        fs.rmSync(path.join(location, ctx.params.file));
+    }
 
     stream.on('open', () => {
-        ctx.body = stream;
-        ctx.set('Content-disposition', 'attachment; filename=' + ctx.params.file);
-        ctx.set('Content-type', file_type);
         log("sent file: %s", ctx.params.file);
     });
-
     stream.on('error', () => {
-        ctx.status = 404;
         log("request for nonexistent file: %s", ctx.params.file);
     })
 });
 
 router.post('/:file', koaBody(), ctx => {
-    //ctx.body = ctx.request.body.key;
     if (fs.existsSync(path.join(files.storage.wrap, ctx.params.file))) {
         if (!ctx.request.body.key) {
             ctx.status = 401;

@@ -8,8 +8,8 @@ const log = debug('tacostand:multer');
 const store_manager = multer.diskStorage({
     destination: (ctx, file, back) => {
         switch (ctx.url) {
-            case "/once":
-                back(null, './tacos/supreme');
+            case "/togo":
+                back(null, './tacos/togo');
                 break;
             case "/wrap":
                 back(null, './tacos/wrap');
